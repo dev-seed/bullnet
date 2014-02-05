@@ -1,0 +1,7 @@
+
+enum COUNTRYCODE
+{
+	KOREA,
+	JAPAN,
+	FRANCE
+};
