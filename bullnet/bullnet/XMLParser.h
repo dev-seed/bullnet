@@ -3,7 +3,7 @@
 class RawData
 {
 public :
-	RawData( std::string Type = "", std::string Value = "" ) : m_Type(Type), m_Value(m_Value) {}
+	RawData( std::string type = "", std::string value = "" ) : m_Type(type), m_Value(value) {}
 	RawData( RawData &rhs )
 	{
 		m_Type = rhs.GetType();
@@ -11,14 +11,14 @@ public :
 	}
 	~RawData(){}
 
-	void	SetType(std::string Type)
+	void	SetType(std::string type)
 	{
-		m_Type = Type;
+		m_Type = type;
 	}
 
-	void	SetValue(std::string Value)
+	void	SetValue(std::string value)
 	{
-		m_Value = Value;
+		m_Value = value;
 	}
 
 	const std::string & GetType()
@@ -42,10 +42,10 @@ public :
 	XMLParser();
 	~XMLParser();
 
-	bool	Init(  std::string &XMLFileName, std::string &OutsideTag );
+	bool	Init(  std::string &XMLFileName, std::string &outSideTag );
 
-	template<class T>
-	bool	RefineRawData( std::string &RawDataKey, T & RefinedData );
+	template<typename RefinedType>
+	bool	RefineRawData( std::string &rawDataKey, RefinedType & refinedData );
 
 	void	Done()
 	{
@@ -54,36 +54,32 @@ public :
 
 protected:
 
-	virtual void	RegisterKeyValue( int EnumKey, std::string StringKey ) = 0;			// match string key (of RawDataMap) to enum key (of RefinedDataMap)
+	virtual void	RefindAndRegisterKeyValue( int enumKey, std::string stringKey ) = 0;			// match string key (of RawDataMap) to enum key (of RefinedDataMap)
 
 private :
 	std::map<std::string, RawData> m_RawDataMap;
 };
 
 
-template<class T>
-bool XMLParser::RefineRawData( std::string &RawDataKey, T & RefinedData )
+template<typename RefinedType>
+bool XMLParser::RefineRawData( std::string &rawDataKey, RefinedType & refinedData )
 {
-	auto Iter = m_RawDataMap.find(RawDataKey);
-	if ( Iter == m_RawDataMap.end() )
+	auto iter_ = m_RawDataMap.find(rawDataKey);
+	if ( iter_ == m_RawDataMap.end() )
 	{
 		return false;
 	}
 
-	RawData RawDataToRefine = Iter->second;
+	RawData rawDataToRefine = iter_->second;
 
-	std::string RawDataType = RawDataToRefine.GetType();
-	std::string RawDataValue = RawDataToRefine.GetValue();
-	if ( RawDataType == "string" )
-	{
-		// in case of string, no need to refine
-		RefinedData = RawDataValue;
-	}
-	else if ( RawDataType == "int" )
+	std::string rawDataType = rawDataToRefine.GetType();
+	std::string rawDataValue = rawDataToRefine.GetValue();
+
+	if ( typeid(RefinedType) == typeid(std::string) && rawDataType == "string" )
 	{
 		try
 		{
-			RefinedData = boost::lexical_cast<int>(RawDataValue);
+			refinedData = boost::lexical_cast<RefinedType>(rawDataValue);
 		}
 		catch (boost::bad_lexical_cast)
 		{
@@ -92,11 +88,11 @@ bool XMLParser::RefineRawData( std::string &RawDataKey, T & RefinedData )
 			return false;
 		}
 	}
-	else if ( RawDataType == "float" )
+	else if ( typeid(RefinedType) == typeid(int) && rawDataType == "int" )
 	{
 		try
 		{
-			RefinedData = boost::lexical_cast<float>(RawDataValue);
+			refinedData = boost::lexical_cast<RefinedType>(rawDataValue);
 		}
 		catch (boost::bad_lexical_cast)
 		{
@@ -105,11 +101,24 @@ bool XMLParser::RefineRawData( std::string &RawDataKey, T & RefinedData )
 			return false;
 		}
 	}
-	else if ( RawDataType == "double" )
+	else if ( typeid(RefinedType) == typeid(float) && rawDataType == "float" )
 	{
 		try
 		{
-			RefinedData = boost::lexical_cast<double>(RawDataValue);
+			refinedData = boost::lexical_cast<RefinedType>(rawDataValue);
+		}
+		catch (boost::bad_lexical_cast)
+		{
+			// bad lexical
+
+			return false;
+		}
+	}
+	else if ( typeid(RefinedType) == typeid(double) && rawDataType == "double" )
+	{
+		try
+		{
+			refinedData = boost::lexical_cast<RefinedType>(rawDataValue);
 		}
 		catch (boost::bad_lexical_cast)
 		{

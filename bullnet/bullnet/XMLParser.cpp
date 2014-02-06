@@ -10,36 +10,36 @@ XMLParser::~XMLParser()
 	m_RawDataMap.clear();
 }
 
-bool XMLParser::Init( std::string &XMLFileName, std::string &OutsideTag )
+bool XMLParser::Init( std::string &XMLFileName, std::string &outSideTag )
 {
-	std::ifstream InputStream;
+	std::ifstream inputStream;
 
-	InputStream.open(XMLFileName.c_str());
-	if ( !InputStream.is_open() )
+	inputStream.open(XMLFileName.c_str());
+	if ( !inputStream.is_open() )
 	{
 		return false;
 	}
 
 	using boost::property_tree::ptree;
 
-	ptree PropertyTree;
-	read_xml(InputStream, PropertyTree);
+	ptree propertyTree;
+	read_xml(inputStream, propertyTree);
 
-	BOOST_FOREACH( ptree::value_type const &Element, PropertyTree.get_child(OutsideTag) )
+	BOOST_FOREACH( ptree::value_type const &element, propertyTree.get_child(outSideTag) )
 	{
-		if ( Element.first == "item" )
+		if ( element.first == "item" )
 		{
-			RawData TempRawData;
-			std::string TempKey = Element.second.get( "<xmlattr>.key" , "invalid_key" );
-			if ( TempKey == "invalid_key" )
+			RawData rawData;
+			std::string key = element.second.get( "<xmlattr>.key" , "invalid_key" );
+			if ( key == "invalid_key" )
 			{
 				return false;
 			}
 
-			TempRawData.SetType( Element.second.get( "<xmlattr>.type" , "string") );
-			TempRawData.SetValue( Element.second.get( "<xmlattr>.value" , "value" ) );
+			rawData.SetType( element.second.get( "<xmlattr>.type" , "string") );
+			rawData.SetValue( element.second.get( "<xmlattr>.value" , "value" ) );
 
-			m_RawDataMap.insert( std::map<std::string, RawData>::value_type( TempKey, TempRawData ) );
+			m_RawDataMap.insert( std::map<std::string, RawData>::value_type( key, rawData ) );
 		}
 	}
 

@@ -10,23 +10,28 @@ CountryCodeDictionary::~CountryCodeDictionary()
 	m_CountryCodeMap.clear();
 }
 
-bool CountryCodeDictionary::Init( std::string &XMLFileName, std::string &OutsideTag )
+bool CountryCodeDictionary::Init( std::string &XMLFileName, std::string &outSideTag )
 {
-	XMLParser::Init( XMLFileName, OutsideTag );
+	XMLParser::Init( XMLFileName, outSideTag );
 
-	RegisterKeyValue( COUNTRYCODE::KOREA, "korea" );
-	RegisterKeyValue( COUNTRYCODE::JAPAN, "japan" );
+	RefindAndRegisterKeyValue( COUNTRYCODE_KOREA , "korea" );
+	RefindAndRegisterKeyValue( COUNTRYCODE_JAPAN , "japan" );
 
 	Done();
 
 	return true;
 }
 
-void CountryCodeDictionary::RegisterKeyValue( int EnumKey, std::string StringKey )
+void CountryCodeDictionary::RefindAndRegisterKeyValue( int enumKey, std::string stringKey )
 {
-	int TempCountryCode = -1;
+	int countryCode = -1;
 
-	RefineRawData<int>( StringKey, TempCountryCode );
+	if ( !RefineRawData<int>( stringKey, countryCode ) )
+	{
+		assert(false);
 
-	m_CountryCodeMap.insert( std::map<int, CountryCode>::value_type( EnumKey, CountryCode(TempCountryCode) ) );
+		return;
+	}
+
+	m_CountryCodeMap.insert( std::map<COUNTRYCODE, CountryCode>::value_type( (COUNTRYCODE)enumKey, CountryCode(countryCode) ) );
 }

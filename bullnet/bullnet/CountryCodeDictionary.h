@@ -30,8 +30,8 @@ public:
 
 protected:
 
-	void RegisterKeyValue( int EnumKey, std::string StringKey );
+	void RefindAndRegisterKeyValue( int enumKey, std::string stringKey );
 
 private:
-	std::map<int, CountryCode> m_CountryCodeMap;
+	std::map<COUNTRYCODE, CountryCode> m_CountryCodeMap;
 };
