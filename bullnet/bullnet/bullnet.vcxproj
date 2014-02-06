@@ -38,16 +38,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>../../../../boost_1_54_0;$(IncludePath)</IncludePath>
+    <IncludePath>../../../../boost;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>../../../../boost_1_54_0/stage/lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>../../../../boost/stage/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>../../../boost_1_54_0;$(IncludePath)</IncludePath>
+    <IncludePath>../../../boost;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LibraryPath>../../../boost_1_54_0/stage/lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>../../../boost/stage/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
