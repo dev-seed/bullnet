@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bullnet", "bullnet\bullnet.vcxproj", "{B90F94DA-B5A9-49B9-88D2-CEBE52F0F35D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		bullnet(Visual Studio 2012|Win32 = bullnet(Visual Studio 2012|Win32
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B90F94DA-B5A9-49B9-88D2-CEBE52F0F35D}.bullnet(Visual Studio 2012|Win32.ActiveCfg = bullnet(Visual Studio 2012|Win32
+		{B90F94DA-B5A9-49B9-88D2-CEBE52F0F35D}.bullnet(Visual Studio 2012|Win32.Build.0 = bullnet(Visual Studio 2012|Win32
+		{B90F94DA-B5A9-49B9-88D2-CEBE52F0F35D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B90F94DA-B5A9-49B9-88D2-CEBE52F0F35D}.Debug|Win32.Build.0 = Debug|Win32
+		{B90F94DA-B5A9-49B9-88D2-CEBE52F0F35D}.Release|Win32.ActiveCfg = Release|Win32
+		{B90F94DA-B5A9-49B9-88D2-CEBE52F0F35D}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
