@@ -4,6 +4,11 @@ class CountryCode
 {
 public:
 	CountryCode( int CountryCode = -1 ) : m_CountryCode(CountryCode) {}
+	CountryCode( const CountryCode& rhs )
+		: m_CountryCode(rhs.m_CountryCode)
+	{
+	}
+
 	~CountryCode(){}
 
 	void SetcCountryCode( int CountryCode )
@@ -26,7 +31,9 @@ public:
 	CountryCodeDictionary();
 	~CountryCodeDictionary();
 
-	bool Init(  std::string &XMLFileName, std::string &OutsideTag );
+	bool Init(  std::string XMLFileName, std::string outsideTag );
+
+	const CountryCode GetCountryCode( COUNTRYCODE key );
 
 protected:
 

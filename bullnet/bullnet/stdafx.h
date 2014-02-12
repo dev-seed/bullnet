@@ -24,3 +24,5 @@
 #include "Common.h"
 #include "XMLParser.h"
 #include "CountryCodeDictionary.h"
+#include "LocalizedCode.h"
+#include "LocalizedTextDictionary.h"

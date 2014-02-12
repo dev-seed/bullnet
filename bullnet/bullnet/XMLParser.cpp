@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "XMLParser.h"
 
 XMLParser::XMLParser()
 {
@@ -36,8 +37,13 @@ bool XMLParser::Init( std::string &XMLFileName, std::string &outSideTag )
 				return false;
 			}
 
-			rawData.SetType( element.second.get( "<xmlattr>.type" , "string") );
-			rawData.SetValue( element.second.get( "<xmlattr>.value" , "value" ) );
+			rawData.SetType( element.second.get( "<xmlattr>.type" , "invalid_type") );
+			rawData.SetValue( element.second.get( "<xmlattr>.value" , "invalid_value" ) );
+
+			if ( rawData.GetType() == "invalid_type" || rawData.GetValue() == "invalid_value" )
+			{
+				return false;
+			}
 
 			m_RawDataMap.insert( std::map<std::string, RawData>::value_type( key, rawData ) );
 		}
@@ -46,3 +52,78 @@ bool XMLParser::Init( std::string &XMLFileName, std::string &outSideTag )
 	return true;
 }
 
+template<typename RefinedType>
+bool XMLParser::RefineRawData( std::string &rawDataKey, RefinedType & refinedData )
+{
+	auto iter_ = m_RawDataMap.find(rawDataKey);
+	if ( iter_ == m_RawDataMap.end() )
+	{
+		return false;
+	}
+
+	RawData rawDataToRefine = iter_->second;
+
+	std::string rawDataType = rawDataToRefine.GetType();
+	std::string rawDataValue = rawDataToRefine.GetValue();
+
+	if ( typeid(RefinedType) == typeid(std::string) && rawDataType == "string" )
+	{
+		try
+		{
+			refinedData = boost::lexical_cast<RefinedType>(rawDataValue);
+		}
+		catch (boost::bad_lexical_cast)
+		{
+			// bad lexical
+
+			return false;
+		}
+	}
+	else if ( typeid(RefinedType) == typeid(int) && rawDataType == "int" )
+	{
+		try
+		{
+			refinedData = boost::lexical_cast<RefinedType>(rawDataValue);
+		}
+		catch (boost::bad_lexical_cast)
+		{
+			// bad lexical
+
+			return false;
+		}
+	}
+	else if ( typeid(RefinedType) == typeid(float) && rawDataType == "float" )
+	{
+		try
+		{
+			refinedData = boost::lexical_cast<RefinedType>(rawDataValue);
+		}
+		catch (boost::bad_lexical_cast)
+		{
+			// bad lexical
+
+			return false;
+		}
+	}
+	else if ( typeid(RefinedType) == typeid(double) && rawDataType == "double" )
+	{
+		try
+		{
+			refinedData = boost::lexical_cast<RefinedType>(rawDataValue);
+		}
+		catch (boost::bad_lexical_cast)
+		{
+			// bad lexical
+
+			return false;
+		}
+	}
+	else
+	{
+		// undefined type
+
+		return false;
+	}
+
+	return true;
+}

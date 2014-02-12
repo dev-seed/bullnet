@@ -4,10 +4,9 @@ class RawData
 {
 public :
 	RawData( std::string type = "", std::string value = "" ) : m_Type(type), m_Value(value) {}
-	RawData( RawData &rhs )
+	RawData( const RawData &rhs )
+		: m_Type(rhs.m_Type) , m_Value(rhs.m_Value)
 	{
-		m_Type = rhs.GetType();
-		m_Value = rhs.GetValue();
 	}
 	~RawData(){}
 
@@ -60,79 +59,3 @@ private :
 	std::map<std::string, RawData> m_RawDataMap;
 };
 
-
-template<typename RefinedType>
-bool XMLParser::RefineRawData( std::string &rawDataKey, RefinedType & refinedData )
-{
-	auto iter_ = m_RawDataMap.find(rawDataKey);
-	if ( iter_ == m_RawDataMap.end() )
-	{
-		return false;
-	}
-
-	RawData rawDataToRefine = iter_->second;
-
-	std::string rawDataType = rawDataToRefine.GetType();
-	std::string rawDataValue = rawDataToRefine.GetValue();
-
-	if ( typeid(RefinedType) == typeid(std::string) && rawDataType == "string" )
-	{
-		try
-		{
-			refinedData = boost::lexical_cast<RefinedType>(rawDataValue);
-		}
-		catch (boost::bad_lexical_cast)
-		{
-			// bad lexical
-
-			return false;
-		}
-	}
-	else if ( typeid(RefinedType) == typeid(int) && rawDataType == "int" )
-	{
-		try
-		{
-			refinedData = boost::lexical_cast<RefinedType>(rawDataValue);
-		}
-		catch (boost::bad_lexical_cast)
-		{
-			// bad lexical
-
-			return false;
-		}
-	}
-	else if ( typeid(RefinedType) == typeid(float) && rawDataType == "float" )
-	{
-		try
-		{
-			refinedData = boost::lexical_cast<RefinedType>(rawDataValue);
-		}
-		catch (boost::bad_lexical_cast)
-		{
-			// bad lexical
-
-			return false;
-		}
-	}
-	else if ( typeid(RefinedType) == typeid(double) && rawDataType == "double" )
-	{
-		try
-		{
-			refinedData = boost::lexical_cast<RefinedType>(rawDataValue);
-		}
-		catch (boost::bad_lexical_cast)
-		{
-			// bad lexical
-
-			return false;
-		}
-	}
-	else
-	{
-		// undefined type
-
-		return false;
-	}
-
-	return true;
-}
