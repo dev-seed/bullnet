@@ -21,6 +21,9 @@
 #include <map>
 #include <fstream>
 
+#include <windows.h>
+
+#include "PerformanceChecker.h"
 #include "Common.h"
 #include "XMLParser.h"
 #include "CountryCodeDictionary.h"
