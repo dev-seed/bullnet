@@ -135,6 +135,7 @@
     <ClInclude Include="CountryCodeDictionary.h" />
     <ClInclude Include="LocalizedCode.h" />
     <ClInclude Include="LocalizedTextDictionary.h" />
+    <ClInclude Include="PerformanceChecker.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="XMLParser.h" />
@@ -143,6 +144,7 @@
     <ClCompile Include="CountryCodeDictionary.cpp" />
     <ClCompile Include="LocalizedCode.cpp" />
     <ClCompile Include="LocalizedTextDictionary.cpp" />
+    <ClCompile Include="PerformanceChecker.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='vs2012|Win32'">Create</PrecompiledHeader>
